@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a wedding website project by Eric Kim, hosted at https://github.com/kimericbyung/wedding.git.  The idea is to create a basic wedding webiste for Brittaney and Eric for their upcoming wedding on 09/19/2026.  They need the ability to RSVP and choose their dish preferences.  Also a page that links to their honeyfund and amazon wishlists.
 
-The overall vibe of the webiste should be tumblr-esque.  
+The overall vibe of the webiste should be handmade.  Fonts should be hand-drawn inspired.  Lines on the website should feel hand-drawn and not super straight.  
 
 - Build, dev, and lint commands
 "dev": "next dev",

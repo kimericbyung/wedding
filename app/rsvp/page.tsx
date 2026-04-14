@@ -17,10 +17,10 @@ interface FormState {
 }
 
 const MEALS: { value: Meal; label: string }[] = [
-  { value: "beef", label: "Beef" },
-  { value: "chicken", label: "Chicken" },
-  { value: "fish", label: "Fish" },
-  { value: "vegetarian", label: "Vegetarian" },
+  { value: "beef", label: "beef" },
+  { value: "chicken", label: "chicken" },
+  { value: "fish", label: "fish" },
+  { value: "vegetarian", label: "vegetarian" },
 ];
 
 function MealSelector({
@@ -31,16 +31,16 @@ function MealSelector({
   onChange: (v: Meal) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-3">
       {MEALS.map((m) => (
         <button
           key={m.value}
           type="button"
           onClick={() => onChange(m.value)}
-          className={`py-2.5 text-xs tracking-wider uppercase border transition-colors ${
+          className={`sketchy py-3 text-xl border-2 transition-colors ${
             value === m.value
-              ? "border-neutral-900 bg-neutral-900 text-white"
-              : "border-stone-200 text-stone-500 hover:border-stone-400"
+              ? "border-ink bg-ink text-parchment"
+              : "border-warm-border text-ink-mid hover:border-ink-mid"
           }`}
         >
           {m.label}
@@ -51,9 +51,9 @@ function MealSelector({
 }
 
 const inputClass =
-  "w-full border-b border-stone-200 py-2.5 text-neutral-900 outline-none focus:border-neutral-900 transition-colors bg-transparent text-sm placeholder:text-stone-300";
+  "w-full border-b-2 border-warm-border py-2 text-ink outline-none focus:border-ink-mid transition-colors bg-transparent text-2xl placeholder:text-ink-light/50";
 
-const labelClass = "block text-xs tracking-[0.15em] uppercase text-stone-400 mb-2";
+const labelClass = "block text-lg text-ink-light mb-1";
 
 export default function RSVP() {
   const [form, setForm] = useState<FormState>({
@@ -94,12 +94,14 @@ export default function RSVP() {
   if (submitted) {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center text-center px-6">
-        <div className="w-px h-12 bg-stone-200 mb-10" />
-        <h2 className="text-3xl font-light text-neutral-900 mb-3">
-          {form.attending === "yes" ? "We can't wait to see you!" : "We'll miss you."}
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" className="mb-8" aria-hidden="true">
+          <path d="M30 55 C15 45 5 30 5 20 C5 10 12 5 20 8 C24 10 28 14 30 18 C32 14 36 10 40 8 C48 5 55 10 55 20 C55 30 45 45 30 55Z" stroke="#C4837A" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        <h2 className="text-4xl font-bold text-ink mb-3">
+          {form.attending === "yes" ? "we can't wait to see you!" : "we'll miss you."}
         </h2>
-        <p className="text-stone-400 text-sm">
-          Thank you, {form.firstName}. Your response has been received.
+        <p className="text-2xl text-ink-mid">
+          thank you, {form.firstName} — your response has been received.
         </p>
       </div>
     );
@@ -109,17 +111,15 @@ export default function RSVP() {
     <div className="py-20 px-6">
       <div className="max-w-lg mx-auto">
         <div className="text-center mb-14">
-          <p className="text-xs tracking-[0.3em] uppercase text-stone-400 mb-4">
-            Kindly respond by August 1, 2026
-          </p>
-          <h1 className="text-4xl font-light text-neutral-900">RSVP</h1>
+          <p className="text-xl text-ink-light mb-3">kindly respond by August 1, 2026</p>
+          <h1 className="text-6xl font-bold text-ink">rsvp</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-10">
           {/* Name */}
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className={labelClass}>First Name</label>
+              <label className={labelClass}>first name</label>
               <input
                 required
                 value={form.firstName}
@@ -128,7 +128,7 @@ export default function RSVP() {
               />
             </div>
             <div>
-              <label className={labelClass}>Last Name</label>
+              <label className={labelClass}>last name</label>
               <input
                 required
                 value={form.lastName}
@@ -140,7 +140,7 @@ export default function RSVP() {
 
           {/* Email */}
           <div>
-            <label className={labelClass}>Email</label>
+            <label className={labelClass}>email</label>
             <input
               required
               type="email"
@@ -152,20 +152,20 @@ export default function RSVP() {
 
           {/* Attendance */}
           <div>
-            <label className={labelClass}>Will you attend?</label>
-            <div className="flex gap-3">
+            <label className={labelClass}>will you attend?</label>
+            <div className="flex gap-3 mt-2">
               {[
-                { v: "yes" as const, l: "Joyfully accepts" },
-                { v: "no" as const, l: "Regretfully declines" },
+                { v: "yes" as const, l: "joyfully accepts" },
+                { v: "no" as const, l: "regretfully declines" },
               ].map(({ v, l }) => (
                 <button
                   key={v}
                   type="button"
                   onClick={() => set("attending", v)}
-                  className={`flex-1 py-3 text-xs tracking-wider uppercase border transition-colors ${
+                  className={`sketchy flex-1 py-3 text-xl border-2 transition-colors ${
                     form.attending === v
-                      ? "border-neutral-900 bg-neutral-900 text-white"
-                      : "border-stone-200 text-stone-500 hover:border-stone-400"
+                      ? "border-ink bg-ink text-parchment"
+                      : "border-warm-border text-ink-mid hover:border-ink-mid"
                   }`}
                 >
                   {l}
@@ -176,31 +176,28 @@ export default function RSVP() {
 
           {form.attending === "yes" && (
             <>
-              {/* Meal */}
               <div>
-                <label className={labelClass}>Your Meal Preference</label>
-                <MealSelector
-                  value={form.meal}
-                  onChange={(v) => set("meal", v)}
-                />
+                <label className={labelClass}>your meal preference</label>
+                <div className="mt-2">
+                  <MealSelector value={form.meal} onChange={(v) => set("meal", v)} />
+                </div>
               </div>
 
-              {/* Plus one toggle */}
               <div>
-                <label className={labelClass}>Bringing a guest?</label>
-                <div className="flex gap-3">
+                <label className={labelClass}>bringing a guest?</label>
+                <div className="flex gap-3 mt-2">
                   {[
-                    { v: false, l: "Just me" },
-                    { v: true, l: "+1 Guest" },
+                    { v: false, l: "just me" },
+                    { v: true, l: "+ 1 guest" },
                   ].map(({ v, l }) => (
                     <button
                       key={l}
                       type="button"
                       onClick={() => set("plusOne", v)}
-                      className={`flex-1 py-3 text-xs tracking-wider uppercase border transition-colors ${
+                      className={`sketchy-alt flex-1 py-3 text-xl border-2 transition-colors ${
                         form.plusOne === v
-                          ? "border-neutral-900 bg-neutral-900 text-white"
-                          : "border-stone-200 text-stone-500 hover:border-stone-400"
+                          ? "border-ink bg-ink text-parchment"
+                          : "border-warm-border text-ink-mid hover:border-ink-mid"
                       }`}
                     >
                       {l}
@@ -209,11 +206,10 @@ export default function RSVP() {
                 </div>
               </div>
 
-              {/* Guest details */}
               {form.plusOne && (
                 <>
                   <div>
-                    <label className={labelClass}>Guest Name</label>
+                    <label className={labelClass}>guest name</label>
                     <input
                       required
                       value={form.plusOneName}
@@ -222,39 +218,38 @@ export default function RSVP() {
                     />
                   </div>
                   <div>
-                    <label className={labelClass}>Guest Meal Preference</label>
-                    <MealSelector
-                      value={form.plusOneMeal}
-                      onChange={(v) => set("plusOneMeal", v)}
-                    />
+                    <label className={labelClass}>guest meal preference</label>
+                    <div className="mt-2">
+                      <MealSelector
+                        value={form.plusOneMeal}
+                        onChange={(v) => set("plusOneMeal", v)}
+                      />
+                    </div>
                   </div>
                 </>
               )}
             </>
           )}
 
-          {/* Notes */}
           <div>
             <label className={labelClass}>
-              Notes{" "}
-              <span className="normal-case text-stone-300 tracking-normal">
-                (dietary restrictions, etc.)
-              </span>
+              notes{" "}
+              <span className="text-ink-light/60">(dietary restrictions, etc.)</span>
             </label>
             <textarea
               value={form.notes}
               onChange={(e) => set("notes", e.target.value)}
               rows={3}
-              className="w-full border-b border-stone-200 py-2.5 text-neutral-900 outline-none focus:border-neutral-900 transition-colors bg-transparent resize-none text-sm"
+              className="w-full border-b-2 border-warm-border py-2 text-ink outline-none focus:border-ink-mid transition-colors bg-transparent resize-none text-2xl"
             />
           </div>
 
           <button
             type="submit"
             disabled={!isValid || loading}
-            className="w-full py-4 bg-neutral-900 text-white text-xs tracking-[0.2em] uppercase hover:bg-neutral-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed mt-4"
+            className="sketchy w-full py-4 bg-ink text-parchment text-2xl font-semibold hover:bg-ink-mid transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            {loading ? "Sending…" : "Submit RSVP"}
+            {loading ? "sending…" : "send our rsvp"}
           </button>
         </form>
       </div>

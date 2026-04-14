@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Caveat } from "next/font/google";
 import "./globals.css";
 import Nav from "./components/Nav";
 
-const geist = Geist({
-  variable: "--font-geist-sans",
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -19,10 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-neutral-900">
+    <html lang="en" className={`${caveat.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-parchment text-ink">
         <Nav />
-        <main className="flex-1 pt-16">{children}</main>
+        <main className="flex-1 pt-16 relative z-10">{children}</main>
       </body>
     </html>
   );
