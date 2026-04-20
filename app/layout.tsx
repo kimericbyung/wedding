@@ -12,9 +12,6 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Brittaney & Eric | September 19, 2026",
   description: "Join us to celebrate our wedding day.",
-  icons: {
-    icon: '/favicon.png'
-  }
 };
 
 export default function RootLayout({
