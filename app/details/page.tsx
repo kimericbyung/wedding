@@ -1,14 +1,5 @@
-function WavyLine() {
-  return (
-    <svg width="100" height="12" viewBox="0 0 100 12" fill="none" aria-hidden="true">
-      <path
-        d="M4 6 C16 2 28 10 40 6 C52 2 64 10 76 6 C88 2 94 10 96 6"
-        stroke="#C4A882"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+function AccentRule() {
+  return <div className="w-10 h-px bg-accent mx-auto" />;
 }
 
 function Section({
@@ -19,18 +10,22 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="sketchy-card border-2 border-warm-border p-8 bg-parchment-dark/40">
-      <h2 className="text-3xl font-bold text-ink mb-5">{title}</h2>
-      <div className="space-y-3 text-xl text-ink-mid leading-relaxed">{children}</div>
+    <div className="border border-warm-border p-8">
+      <h2 className="text-xs tracking-[0.3em] lowercase text-accent font-semibold mb-5">
+        {title}
+      </h2>
+      <div className="space-y-3">{children}</div>
     </div>
   );
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col sm:flex-row sm:gap-3">
-      <span className="text-ink-light min-w-[8rem]">{label}</span>
-      <span className="text-ink">{value}</span>
+    <div className="flex flex-col sm:flex-row sm:gap-4">
+      <span className="text-xs tracking-wide lowercase text-ink-light font-normal min-w-[9rem]">
+        {label}
+      </span>
+      <span className="text-sm text-ink font-light">{value}</span>
     </div>
   );
 }
@@ -40,15 +35,16 @@ export default function Details() {
     <div className="py-20 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-14">
-          <h1 className="text-6xl font-bold text-ink mb-4">the details</h1>
-          <WavyLine />
-          <p className="text-xl text-ink-mid mt-4">
-            everything you need to know for September 19, 2026
+          <h1 className="text-[14pt] font-semibold tracking-[0.2em] text-accent mb-4">
+            the details
+          </h1>
+          <AccentRule />
+          <p className="text-sm text-ink-light font-light mt-5">
+            everything you need to know for september 19, 2026
           </p>
         </div>
 
-        <div className="space-y-6">
-          {/* Timeline */}
+        <div className="space-y-4">
           <Section title="schedule">
             <Detail label="doors open" value="4:30 pm" />
             <Detail label="ceremony" value="5:00 pm" />
@@ -57,43 +53,37 @@ export default function Details() {
             <Detail label="last dance" value="10:30 pm" />
           </Section>
 
-          {/* Ceremony */}
           <Section title="ceremony">
-            <Detail label="venue" value="Venue Name" />
-            <Detail label="address" value="123 Street Name, City, State ZIP" />
+            <Detail label="venue" value="venue name" />
+            <Detail label="address" value="123 street name, city, state zip" />
             <Detail label="time" value="5:00 pm — please arrive by 4:45" />
           </Section>
 
-          {/* Reception */}
           <Section title="reception">
-            <Detail label="venue" value="Venue Name" />
-            <Detail label="address" value="123 Street Name, City, State ZIP" />
+            <Detail label="venue" value="venue name" />
+            <Detail label="address" value="123 street name, city, state zip" />
             <Detail label="dinner" value="6:30 pm" />
             <Detail label="dancing" value="after dinner until 10:30 pm" />
           </Section>
 
-          {/* Getting there */}
           <Section title="getting there">
-            <Detail label="parking" value="Free parking available on site" />
-            <Detail label="rideshare" value="Drop-off at main entrance on Street Name" />
-            <p className="text-ink-light text-lg pt-1">
+            <Detail label="parking" value="free parking available on site" />
+            <Detail label="rideshare" value="drop-off at main entrance on street name" />
+            <p className="text-sm text-ink-light font-light pt-1">
               we recommend rideshare so everyone can celebrate freely!
             </p>
           </Section>
 
-          {/* Accommodations */}
           <Section title="accommodations">
-            <p>
+            <p className="text-sm text-ink font-light mb-4">
               we've reserved a room block at the hotel below — book by{" "}
-              <span className="text-ink font-semibold">August 1, 2026</span> to get
-              the group rate.
+              <span className="text-ink font-normal">august 1, 2026</span> to
+              get the group rate.
             </p>
-            <div className="pt-2 space-y-3">
-              <Detail label="hotel" value="Hotel Name" />
-              <Detail label="address" value="Hotel Address, City, State" />
-              <Detail label="group code" value="KIMWEDDING" />
-              <Detail label="rate" value="$XXX / night" />
-            </div>
+            <Detail label="hotel" value="hotel name" />
+            <Detail label="address" value="hotel address, city, state" />
+            <Detail label="group code" value="KIMWEDDING" />
+            <Detail label="rate" value="$xxx / night" />
           </Section>
         </div>
       </div>

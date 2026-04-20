@@ -1,43 +1,26 @@
-function SmallLeaf({ rotate = 0 }: { rotate?: number }) {
-  return (
-    <svg
-      width="22"
-      height="28"
-      viewBox="0 0 22 28"
-      fill="none"
-      style={{ transform: `rotate(${rotate}deg)` }}
-      aria-hidden="true"
-    >
-      <path
-        d="M11 26 C9 20 10 12 11 2"
-        stroke="#7A5C42"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M11 14 C5 8 0 6 1 2 C2 -1 9 6 11 14Z"
-        stroke="#7A9472"
-        strokeWidth="1"
-        fill="none"
-      />
-      <path
-        d="M11 14 C17 8 22 6 21 2 C20 -1 13 6 11 14Z"
-        stroke="#7A9472"
-        strokeWidth="1"
-        fill="none"
-      />
-    </svg>
-  );
+function AccentRule() {
+  return <div className="w-10 h-px bg-accent mx-auto" />;
 }
 
 function Swatch({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <div
-        className="w-12 h-12 sketchy border-2 border-warm-border"
+        className="w-11 h-11 border border-warm-border"
         style={{ backgroundColor: color }}
       />
-      <span className="text-lg text-ink-mid">{label}</span>
+      <span className="text-xs text-ink-light font-light">{label}</span>
+    </div>
+  );
+}
+
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="border border-warm-border p-8">
+      <h2 className="text-xs tracking-[0.3em] lowercase text-accent font-semibold mb-5">
+        {title}
+      </h2>
+      {children}
     </div>
   );
 }
@@ -47,42 +30,56 @@ export default function Attire() {
     <div className="py-20 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-14">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <SmallLeaf rotate={-20} />
-            <h1 className="text-6xl font-bold text-ink">what to wear</h1>
-            <SmallLeaf rotate={20} />
-          </div>
-          <p className="text-3xl font-semibold text-rose mt-2">garden formal</p>
-          <p className="text-xl text-ink-mid mt-3 max-w-md mx-auto">
+          <h1 className="text-[14pt] font-semibold tracking-[0.2em] text-accent mb-4">
+            what to wear
+          </h1>
+          <AccentRule />
+          <p className="text-sm font-semibold tracking-[0.2em] lowercase text-accent mt-5">
+            garden formal
+          </p>
+          <p className="text-sm text-ink-mid font-light mt-3 max-w-md mx-auto leading-relaxed">
             think elegant but comfortable — we're celebrating outside and want
-            everyone to feel their best!
+            everyone to feel their best.
           </p>
         </div>
 
-        <div className="space-y-6">
-          {/* For them */}
-          <div className="sketchy-card border-2 border-warm-border p-8 bg-parchment-dark/40">
-            <h2 className="text-3xl font-bold text-ink mb-4">for her</h2>
-            <ul className="space-y-2 text-xl text-ink-mid">
-              <li>— floor-length or midi dress or dressy jumpsuit</li>
-              <li>— wedges or block heels work best on grass</li>
-              <li>— a wrap or light jacket for the evening breeze</li>
+        <div className="space-y-4">
+          <Card title="for her">
+            <ul className="space-y-2 text-sm text-ink font-light">
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                floor-length or midi dress, or a dressy jumpsuit
+              </li>
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                wedges or block heels work best on grass
+              </li>
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                a wrap or light jacket for the evening breeze
+              </li>
             </ul>
-          </div>
+          </Card>
 
-          <div className="sketchy-card border-2 border-warm-border p-8 bg-parchment-dark/40">
-            <h2 className="text-3xl font-bold text-ink mb-4">for him</h2>
-            <ul className="space-y-2 text-xl text-ink-mid">
-              <li>— suit or blazer with dress pants</li>
-              <li>— tie optional, pocket square encouraged</li>
-              <li>— loafers or dress shoes</li>
+          <Card title="for him">
+            <ul className="space-y-2 text-sm text-ink font-light">
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                suit or blazer with dress pants
+              </li>
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                tie optional, pocket square encouraged
+              </li>
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                loafers or dress shoes
+              </li>
             </ul>
-          </div>
+          </Card>
 
-          {/* Color palette */}
-          <div className="sketchy-card border-2 border-warm-border p-8 bg-parchment-dark/40">
-            <h2 className="text-3xl font-bold text-ink mb-2">colors we love</h2>
-            <p className="text-lg text-ink-light mb-6">
+          <Card title="colors we love">
+            <p className="text-xs text-ink-light font-light mb-6">
               earthy tones, dusty florals, sage, cream, terracotta
             </p>
             <div className="flex flex-wrap gap-6">
@@ -92,17 +89,24 @@ export default function Attire() {
               <Swatch color="#C4704F" label="terracotta" />
               <Swatch color="#B8B0A0" label="stone" />
             </div>
-          </div>
+          </Card>
 
-          {/* Please avoid */}
-          <div className="sketchy-card border-2 border-warm-border p-8 bg-parchment-dark/40">
-            <h2 className="text-3xl font-bold text-ink mb-4">kindly avoid</h2>
-            <ul className="space-y-2 text-xl text-ink-mid">
-              <li>— white, ivory, or champagne white (that's the bride!)</li>
-              <li>— black tie formal (we want it fun, not stiff)</li>
-              <li>— stilettos or thin heels — the ceremony is on grass</li>
+          <Card title="kindly avoid">
+            <ul className="space-y-2 text-sm text-ink font-light">
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                white, ivory, or champagne white (that's the bride!)
+              </li>
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                black tie formal — we want it fun, not stiff
+              </li>
+              <li className="flex gap-3">
+                <span className="text-accent shrink-0">—</span>
+                stilettos or thin heels — the ceremony is on grass
+              </li>
             </ul>
-          </div>
+          </Card>
         </div>
       </div>
     </div>
