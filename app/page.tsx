@@ -35,18 +35,24 @@ export default function Home() {
           jardin del sol &middot; snohomish, wa
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/rsvp"
-            className="px-8 py-3 bg-accent text-white text-xs tracking-[0.25em] lowercase font-normal hover:bg-accent/85 transition-colors"
-          >
-            rsvp
+        <div className="flex flex-col sm:flex-row gap-4 items-center">
+          <Link href="/rsvp" className="opacity-90 hover:opacity-100 transition-opacity">
+            <Image
+              src="/rsvp-button.png"
+              alt="rsvp"
+              width={400}
+              height={120}
+              className="h-12 w-auto"
+            />
           </Link>
-          <Link
-            href="/registry"
-            className="px-8 py-3 border border-ink text-ink text-xs tracking-[0.25em] lowercase font-normal hover:bg-ink hover:text-parchment transition-colors"
-          >
-            registry
+          <Link href="/registry" className="opacity-90 hover:opacity-100 transition-opacity">
+            <Image
+              src="/registry-button.png"
+              alt="registry"
+              width={400}
+              height={120}
+              className="h-12 w-auto"
+            />
           </Link>
         </div>
       </section>
