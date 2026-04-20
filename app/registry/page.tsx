@@ -1,12 +1,12 @@
 const registries = [
   {
-    name: "Honeyfund",
+    name: "honeyfund",
     description: "help us celebrate our honeymoon with an experience or adventure.",
     url: "#", // TODO: replace with your Honeyfund URL
     cta: "visit honeyfund",
   },
   {
-    name: "Amazon",
+    name: "amazon",
     description: "browse our curated wishlist for our home together.",
     url: "#", // TODO: replace with your Amazon wishlist URL
     cta: "view wishlist",

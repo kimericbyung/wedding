@@ -2,23 +2,23 @@ import Image from "next/image";
 
 const milestones = [
   {
-    date: "month year",
+    date: "june year",
     body: "Share the story of how you two first crossed paths — where you were, what happened, and what you remember most about that moment.",
   },
   {
-    date: "month year",
+    date: "july year",
     body: "Tell us about your first date — where you went, what you talked about, and when you knew there was something worth pursuing.",
   },
   {
-    date: "month year",
+    date: "aug year",
     body: "Describe the moment you two decided to become a couple and what that felt like.",
   },
   {
-    date: "month year",
+    date: "sept year",
     body: "A favorite memory, trip, or chapter in your relationship that defined who you are as a couple.",
   },
   {
-    date: "month year",
+    date: "nov year",
     body: "Tell the proposal story — all the details, the nerves, the surprise (or not!), and the moment everything changed.",
   },
   {

@@ -25,7 +25,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
   );
 }
 
-export default function Attire() {
+export default function WhatToWear() {
   return (
     <div className="py-20 px-6">
       <div className="max-w-2xl mx-auto">

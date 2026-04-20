@@ -32,7 +32,7 @@ export default function Home() {
           september 19, 2026
         </p>
         <p className="text-sm text-ink-light font-light mb-12">
-          venue name &middot; city, state
+          jardin del sol &middot; snohomish, wa
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">
@@ -66,16 +66,16 @@ export default function Home() {
                 ceremony
               </p>
               <p className="text-2xl font-light text-ink mb-2">5:00 pm</p>
-              <p className="text-sm text-ink-mid font-light">venue name</p>
-              <p className="text-sm text-ink-light font-light">address, city, state</p>
+              <p className="text-sm text-ink-mid font-light">jardin del sol</p>
+              <p className="text-sm text-ink-light font-light">10522 52nd street se snohomish, wa 98290</p>
             </div>
             <div>
               <p className="text-xs tracking-[0.3em] lowercase text-ink-light font-normal mb-4">
                 reception
               </p>
               <p className="text-2xl font-light text-ink mb-2">6:30 pm</p>
-              <p className="text-sm text-ink-mid font-light">venue name</p>
-              <p className="text-sm text-ink-light font-light">address, city, state</p>
+              <p className="text-sm text-ink-mid font-light">jardin del sol</p>
+              <p className="text-sm text-ink-light font-light">10522 52nd street se snohomish, wa 98290</p>
             </div>
           </div>
         </div>

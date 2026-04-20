@@ -54,13 +54,13 @@ export default function Details() {
           </Section>
 
           <Section title="ceremony">
-            <Detail label="venue" value="venue name" />
+            <Detail label="venue" value="jardin del sol" />
             <Detail label="address" value="123 street name, city, state zip" />
             <Detail label="time" value="5:00 pm — please arrive by 4:45" />
           </Section>
 
           <Section title="reception">
-            <Detail label="venue" value="venue name" />
+            <Detail label="venue" value="jardin del sol" />
             <Detail label="address" value="123 street name, city, state zip" />
             <Detail label="dinner" value="6:30 pm" />
             <Detail label="dancing" value="after dinner until 10:30 pm" />

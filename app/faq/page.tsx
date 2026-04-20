@@ -5,15 +5,15 @@ import { useState } from "react";
 const faqs = [
   {
     q: "when should i arrive?",
-    a: "please arrive by 4:45 pm — the ceremony begins at 5:00 pm sharp and we don't want you to miss a thing!",
+    a: "please arrive by 4:00 pm",
   },
   {
     q: "is there parking at the venue?",
     a: "yes! free parking is available on site. we do encourage rideshare so everyone can celebrate without worrying about driving.",
   },
   {
-    q: "are children welcome?",
-    a: "we love your little ones, but we've designed this as an adults-only evening so everyone can relax and enjoy. we hope you can make it a night out!",
+    q: "are uninvited children welcome?",
+    a: "no",
   },
   {
     q: "can i bring a plus one?",
@@ -25,11 +25,7 @@ const faqs = [
   },
   {
     q: "will the ceremony be indoors or outdoors?",
-    a: "the ceremony will be held outdoors. the reception will move inside. we recommend wearing layers and choosing shoes that work on grass!",
-  },
-  {
-    q: "is there a shuttle between the hotel and venue?",
-    a: "we're working on arranging a shuttle — details will be shared closer to the date. in the meantime, rideshare is easy from the hotel block.",
+    a: "the ceremony will be held outdoors. the reception will be covered outdoors. we recommend wearing layers and choosing shoes that work on grass!",
   },
   {
     q: "can i take photos during the ceremony?",
