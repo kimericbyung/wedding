@@ -1,8 +1,27 @@
+import { v2 as cloudinary } from "cloudinary";
+import GalleryGrid from "./GalleryGrid";
+
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+async function getGalleryImages() {
+  const result = await cloudinary.api.resources_by_asset_folder("gallery", {
+    max_results: 100,
+    resource_type: "image",
+  });
+  return result.resources ?? [];
+}
+
 function AccentRule() {
   return <div className="w-10 h-px bg-accent mx-auto" />;
 }
 
-export default function Gallery() {
+export default async function Gallery() {
+  const images = await getGalleryImages();
+
   return (
     <div className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
@@ -12,22 +31,11 @@ export default function Gallery() {
           </h1>
           <AccentRule />
           <p className="text-sm text-ink-light font-light mt-5">
-            moments from our journey together
+            moments from our engagement shoot
           </p>
         </div>
 
-        <div className="columns-2 md:columns-3 gap-3 space-y-3">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={i}
-              className="break-inside-avoid border border-warm-border bg-parchment-dark aspect-square flex items-center justify-center"
-            >
-              <span className="text-xs text-ink-light font-light tracking-wide">
-                photo {i + 1}
-              </span>
-            </div>
-          ))}
-        </div>
+        <GalleryGrid images={images} />
       </div>
     </div>
   );

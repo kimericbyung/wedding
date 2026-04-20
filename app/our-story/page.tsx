@@ -33,7 +33,7 @@ export default function OurStory() {
       <div className="max-w-xl mx-auto">
         <div className="flex flex-col items-center justify-center text-center">
           <Image
-            src="/animated-our-story-2.gif"
+            src="/our-story.gif"
             alt="our story"
             width={1536}
             height={1024}
@@ -56,7 +56,7 @@ export default function OurStory() {
                 : "mr-[50%] text-center";
 
             return (
-              <div key={m.date}>
+              <div key={m.date} className={i > 0 ? "mt-14" : ""}>
                 <div className={alignment}>
                   <p className="text-xs tracking-[0.35em] uppercase text-accent font-semibold mb-3">
                     {m.date}
@@ -65,9 +65,6 @@ export default function OurStory() {
                     {m.body}
                   </p>
                 </div>
-                {i < milestones.length - 1 && (
-                  <div className="w-px h-16 bg-warm-border mx-auto my-10" />
-                )}
               </div>
             );
           })}
