@@ -28,7 +28,7 @@ const sections: Section[] = [
       { label: "address", value: "10522 52nd street se, snohomish, wa 98290" },
       { label: "note", value: "please arrive by 4:00 pm" },
     ],
-    image: "/altar.png",
+    image: "/ceremony.png",
   },
   {
     label: "5:00 pm",
@@ -37,7 +37,7 @@ const sections: Section[] = [
       { label: "photobooth", value: "until 6:00 pm" },
       { label: "drinks", value: "until 10:00 pm" },
     ],
-    image: "/photobooth.png",
+    image: "/cocktail-hour.png",
   },
   {
     label: "6:00 pm",
@@ -46,6 +46,7 @@ const sections: Section[] = [
       { label: "dinner", value: "6:30 pm" },
       { label: "dancing", value: "after dinner until 10:00 pm" },
     ],
+    image: "/reception.png"
   },
 ];
 
