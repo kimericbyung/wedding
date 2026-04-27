@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "can i bring a plus one?",
-    a: "due to venue capacity, we're only able to accommodate guests who are listed on the invitation. if you have questions, please reach out to us directly.",
+    a: "probably no",
   },
   {
     q: "i have dietary restrictions — will there be options for me?",
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: "can i take photos during the ceremony?",
-    a: "we're having an unplugged ceremony — please put phones and cameras away so you can be fully present with us. our photographer will capture everything! you're welcome to snap away at the reception.",
+    a: "please put phones and cameras away so you can be fully present with us. our photographer will capture everything! you're welcome to snap away at the reception.",
   },
   {
     q: "what if i need to change my rsvp?",

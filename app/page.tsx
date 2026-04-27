@@ -71,17 +71,15 @@ export default function Home() {
               <p className="text-xs tracking-[0.3em] lowercase text-ink-light font-normal mb-4">
                 ceremony
               </p>
-              <p className="text-2xl font-light text-ink mb-2">5:00 pm</p>
+              <p className="text-2xl font-light text-ink mb-2">4:30 pm</p>
               <p className="text-sm text-ink-mid font-light">jardin del sol</p>
               <p className="text-sm text-ink-light font-light">10522 52nd street se snohomish, wa 98290</p>
             </div>
             <div>
               <p className="text-xs tracking-[0.3em] lowercase text-ink-light font-normal mb-4">
-                reception
+                rsvp deadline
               </p>
-              <p className="text-2xl font-light text-ink mb-2">6:30 pm</p>
-              <p className="text-sm text-ink-mid font-light">jardin del sol</p>
-              <p className="text-sm text-ink-light font-light">10522 52nd street se snohomish, wa 98290</p>
+              <p className="text-2xl font-light text-ink mb-2">july 15th, 2026</p>
             </div>
           </div>
         </div>

@@ -91,10 +91,6 @@ export default function RSVPLanding() {
             ))}
           </ul>
         )}
-
-        <p className="text-center text-xs text-ink-light font-light mt-12 tracking-wide">
-          have a direct link? you can use that too.
-        </p>
       </div>
     </div>
   );

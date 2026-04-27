@@ -15,9 +15,9 @@ const sections: Section[] = [
     details: [
       { label: "doors open", value: "4:00 pm" },
       { label: "ceremony", value: "4:30 pm" },
-      { label: "cocktail hour", value: "5:45 pm" },
-      { label: "reception", value: "6:30 pm" },
-      { label: "last dance", value: "10:30 pm" },
+      { label: "cocktail hour", value: "5:00 pm" },
+      { label: "reception", value: "6:00 pm" },
+      { label: "last dance", value: "10:00 pm" },
     ],
   },
   {

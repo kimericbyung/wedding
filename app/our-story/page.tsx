@@ -1,29 +1,30 @@
 import Image from "next/image";
+import AudioPlayer from "../components/AudioPlayer";
 
 const milestones = [
   {
-    date: "june year",
-    body: "Share the story of how you two first crossed paths — where you were, what happened, and what you remember most about that moment.",
+    date: "some time ago",
+    body: "brittaney and eric met at a party. brittaney came with her brother derek, eric thought they were dating.  turns out they were siblings.",
   },
   {
-    date: "july year",
-    body: "Tell us about your first date — where you went, what you talked about, and when you knew there was something worth pursuing.",
+    date: "after a few more chapters",
+    body: "they met again, this time at a night market.  denying the sparks in the air would be like denying the earth is round.  nonesense.",
   },
   {
-    date: "aug year",
-    body: "Describe the moment you two decided to become a couple and what that felt like.",
+    date: "and so it began",
+    body: "living 5 minutes apart, the two began their surreptitious relationship.",
   },
   {
-    date: "sept year",
-    body: "A favorite memory, trip, or chapter in your relationship that defined who you are as a couple.",
+    date: "what started as a casual courtship",
+    body: "blossomed into a full on relationship.  brittaney and eric made it official on july 3rd, 2023, so they could always enjoy the next day together."
   },
   {
-    date: "nov year",
-    body: "Tell the proposal story — all the details, the nerves, the surprise (or not!), and the moment everything changed.",
+    date: "after truly getting to know each other",
+    body: "eric proposed to brittaney on aug 15th, 2025",
   },
   {
     date: "september 19, 2026",
-    body: "And now we begin the next chapter.",
+    body: "and now we begin the next chapter.",
   },
 ];
 
@@ -33,7 +34,7 @@ export default function OurStory() {
       <div className="max-w-xl mx-auto">
         <div className="flex flex-col items-center justify-center text-center">
           <Image
-            src="/our-story.gif"
+            src="/our-story-ramen.gif"
             alt="our story"
             width={1536}
             height={1024}
@@ -41,9 +42,10 @@ export default function OurStory() {
             priority
             className="w-80 md:w-96 h-auto"
           />
+          <AudioPlayer src="https://res.cloudinary.com/dqrjnwkpu/video/upload/v1777260384/Out_Getting_Ribs_obmopm.mp3" title="out getting ribs - king krule" />
         </div>
 
-        <div>
+        <div className="mt-16">
           {milestones.map((m, i) => {
             // i === 0: centered
             // i odd:  block starts at center → left edge at 50% (right half), text-left
