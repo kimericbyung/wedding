@@ -15,7 +15,6 @@ type GuestState = {
   attending: "yes" | "no" | "";
   meal_choice: string;
   dietary_notes: string;
-  plus_one_name: string;
   note: string;
 };
 
@@ -32,7 +31,6 @@ function initState(guests: GuestWithRSVP[]): Record<string, GuestState> {
             : "",
         meal_choice: g.rsvp?.meal_choice ?? "",
         dietary_notes: g.rsvp?.dietary_notes ?? "",
-        plus_one_name: g.rsvp?.plus_one_name ?? "",
         note: g.rsvp?.note ?? "",
       },
     ])
@@ -66,10 +64,14 @@ export default function RSVPForm({
       [guestId]: { ...prev[guestId], [field]: value },
     }));
 
-  const isValid = guests.every((g) => {
-    const s = states[g.id];
-    return s.attending !== "" && (s.attending === "no" || s.meal_choice !== "");
-  });
+  // Valid if at least one guest has been answered, and every answered attending guest has a meal choice
+  const answeredGuests = guests.filter((g) => states[g.id].attending !== "");
+  const isValid =
+    answeredGuests.length > 0 &&
+    answeredGuests.every((g) => {
+      const s = states[g.id];
+      return s.attending === "no" || s.meal_choice !== "";
+    });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,14 +81,13 @@ export default function RSVPForm({
     try {
       await submitPartyRSVP(
         party.id,
-        guests.map((g) => {
+        answeredGuests.map((g) => {
           const s = states[g.id];
           return {
             guest_id: g.id,
             attending: s.attending === "yes",
             meal_choice: s.meal_choice || undefined,
             dietary_notes: s.dietary_notes || undefined,
-            plus_one_name: s.plus_one_name || undefined,
             note: s.note || undefined,
           };
         })
@@ -208,22 +209,7 @@ export default function RSVPForm({
                       />
                     </div>
 
-                    <div>
-                      <label className={labelClass}>
-                        plus one name{" "}
-                        <span className="normal-case text-ink-light/60 tracking-normal">
-                          (if applicable)
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        value={s.plus_one_name}
-                        onChange={(e) =>
-                          setField(guest.id, "plus_one_name", e.target.value)
-                        }
-                        className={inputClass}
-                      />
-                    </div>
+
                   </>
                 )}
 
