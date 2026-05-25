@@ -1,7 +1,7 @@
 const registries = [
   {
     name: "honeyfund",
-    description: "help us celebrate our honeymoon with an experience or adventure.",
+    description: "help us celebrate our honeymoon and new home.",
     url: "https://www.honeyfund.com/site/kim-hong-09-19-2026",
     cta: "visit honeyfund",
   },
