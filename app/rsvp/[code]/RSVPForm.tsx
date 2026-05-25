@@ -4,16 +4,8 @@ import { useState } from "react";
 import { submitPartyRSVP } from "../actions";
 import type { Party, GuestWithRSVP } from "../actions";
 
-const MEALS = [
-  { value: "beef", label: "beef" },
-  { value: "chicken", label: "chicken" },
-  { value: "fish", label: "fish" },
-  { value: "vegetarian", label: "vegetarian" },
-];
-
 type GuestState = {
   attending: "yes" | "no" | "";
-  meal_choice: string;
   dietary_notes: string;
   note: string;
 };
@@ -29,7 +21,6 @@ function initState(guests: GuestWithRSVP[]): Record<string, GuestState> {
             : g.rsvp?.attending === false
             ? "no"
             : "",
-        meal_choice: g.rsvp?.meal_choice ?? "",
         dietary_notes: g.rsvp?.dietary_notes ?? "",
         note: g.rsvp?.note ?? "",
       },
@@ -64,14 +55,8 @@ export default function RSVPForm({
       [guestId]: { ...prev[guestId], [field]: value },
     }));
 
-  // Valid if at least one guest has been answered, and every answered attending guest has a meal choice
   const answeredGuests = guests.filter((g) => states[g.id].attending !== "");
-  const isValid =
-    answeredGuests.length > 0 &&
-    answeredGuests.every((g) => {
-      const s = states[g.id];
-      return s.attending === "no" || s.meal_choice !== "";
-    });
+  const isValid = answeredGuests.length > 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +71,7 @@ export default function RSVPForm({
           return {
             guest_id: g.id,
             attending: s.attending === "yes",
-            meal_choice: s.meal_choice || undefined,
+            meal_choice: "buffet",
             dietary_notes: s.dietary_notes || undefined,
             note: s.note || undefined,
           };
@@ -168,49 +153,23 @@ export default function RSVPForm({
                 </div>
 
                 {s.attending === "yes" && (
-                  <>
-                    {/* Meal */}
-                    <div>
-                      <label className={labelClass}>meal preference</label>
-                      <div className="grid grid-cols-2 gap-2">
-                        {MEALS.map((m) => (
-                          <button
-                            key={m.value}
-                            type="button"
-                            onClick={() =>
-                              setField(guest.id, "meal_choice", m.value)
-                            }
-                            className={`py-2.5 text-xs tracking-wide lowercase border transition-colors font-normal ${
-                              s.meal_choice === m.value
-                                ? "border-ink bg-ink text-parchment"
-                                : "border-warm-border text-ink-mid hover:border-ink"
-                            }`}
-                          >
-                            {m.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className={labelClass}>
-                        dietary notes{" "}
-                        <span className="normal-case text-ink-light/60 tracking-normal">
-                          (optional)
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        value={s.dietary_notes}
-                        onChange={(e) =>
-                          setField(guest.id, "dietary_notes", e.target.value)
-                        }
-                        className={inputClass}
-                      />
-                    </div>
-
-
-                  </>
+                  <div>
+                    <label className={labelClass}>
+                      dietary needs{" "}
+                      <span className="normal-case text-ink-light/60 tracking-normal">
+                        (optional)
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={s.dietary_notes}
+                      onChange={(e) =>
+                        setField(guest.id, "dietary_notes", e.target.value)
+                      }
+                      placeholder="vegetarian, pescetarian, gluten-free, nut allergy, etc."
+                      className={inputClass}
+                    />
+                  </div>
                 )}
 
                 {s.attending !== "" && (
