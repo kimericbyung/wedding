@@ -35,6 +35,10 @@ const faqs = [
     q: "what if i need to change my rsvp?",
     a: "life happens! please reach out to us directly if you need to update your response, ideally before august 1, 2026.",
   },
+  {
+    q: "do you accept cash gifts?",
+    a: "absolutely! cash gifts are warmly welcomed at the wedding. if you'd prefer to give online, we've also registered on honeyfund.",
+  },
 ];
 
 function FAQItem({ q, a }: { q: string; a: string }) {
