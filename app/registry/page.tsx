@@ -2,14 +2,8 @@ const registries = [
   {
     name: "honeyfund",
     description: "help us celebrate our honeymoon with an experience or adventure.",
-    url: "#", // TODO: replace with your Honeyfund URL
+    url: "https://www.honeyfund.com/site/kim-hong-09-19-2026",
     cta: "visit honeyfund",
-  },
-  {
-    name: "amazon",
-    description: "browse our curated wishlist for our home together.",
-    url: "#", // TODO: replace with your Amazon wishlist URL
-    cta: "view wishlist",
   },
 ];
 
