@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "can i bring a plus one?",
-    a: "probably no",
+    a: "no, we're so excited to celebrate with our closest family and friends. because of limited space and our hope to keep the day intimate, we're only able to accommodate the guests named on your invitation. thank you for understanding",
   },
   {
     q: "i have dietary restrictions — will there be options for me?",
