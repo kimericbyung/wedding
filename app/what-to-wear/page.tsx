@@ -61,7 +61,7 @@ export default function WhatToWear() {
         <section className="text-center">
           <SectionHeader title="come in any colors!" />
           <p className="text-sm text-ink-mid font-light leading-relaxed max-w-md mx-auto">
-            wear whatever colors make you feel great — the more the merrier. the only exception: please skip white and ivory, that's the bride's moment to shine.
+            wear whatever colors make you feel great — the more the merrier. the only exception: please skip white and ivory.
           </p>
         </section>
 

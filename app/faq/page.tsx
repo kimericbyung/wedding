@@ -78,7 +78,7 @@ export default function FAQ() {
           <h1 className="text-[14pt] font-semibold tracking-[0.2em] text-accent mb-4">faq</h1>
           <div className="w-10 h-px bg-accent mx-auto" />
           <p className="text-sm text-ink-light font-light mt-5">
-            got questions? we've got answers. if yours isn't here, just reach out!
+            got questions? we&apos;ve got answers. if yours isn&apos;t here, just reach out!
           </p>
         </div>
 
