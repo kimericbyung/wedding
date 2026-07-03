@@ -8,7 +8,7 @@ const milestones = [
   },
   {
     date: "after a few more chapters",
-    body: "they met again, this time at a night market.  denying the sparks in the air would be like denying the earth is round.  nonesense.",
+    body: "they met again, this time at a night market.  denying the sparks in the air would be like denying the earth is round.  nonsense.",
   },
   {
     date: "and so it began",
