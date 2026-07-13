@@ -107,7 +107,7 @@ export default function RSVPForm({
         <div className="text-center mb-12">
           {alreadyResponded && (
             <p className="text-xs tracking-wide text-accent font-semibold mb-4 lowercase">
-              you've already responded — feel free to update below
+              you&apos;ve already responded — feel free to update below
             </p>
           )}
           {/* display_name is user data from the database — preserve its casing */}
