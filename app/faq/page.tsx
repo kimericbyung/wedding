@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "what if i need to change my rsvp?",
-    a: "life happens! please reach out to us directly if you need to update your response, ideally before august 1, 2026.",
+    a: "life happens! please reach out to us directly if you need to update your response, ideally before july 15th, 2026.",
   },
   {
     q: "do you accept cash gifts?",
