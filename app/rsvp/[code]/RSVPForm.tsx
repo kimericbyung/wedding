@@ -116,7 +116,7 @@ export default function RSVPForm({
           </h1>
           <div className="w-10 h-px bg-accent mx-auto mt-4 mb-4" />
           <p className="text-xs tracking-[0.2em] lowercase text-ink-light font-normal">
-            kindly respond by july 15th, 2026
+            kindly respond by august 1st, 2026
           </p>
         </div>
 

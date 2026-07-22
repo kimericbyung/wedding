@@ -79,7 +79,7 @@ export default function Home() {
               <p className="text-xs tracking-[0.3em] lowercase text-ink-light font-normal mb-4">
                 rsvp deadline
               </p>
-              <p className="text-2xl font-light text-ink mb-2">july 15th, 2026</p>
+              <p className="text-2xl font-light text-ink mb-2">august 1st, 2026</p>
             </div>
           </div>
         </div>
