@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { assignSeat } from "./actions";
 import type { SeatingGuest } from "./page";
 
-const SEATS_PER_TABLE = 8;
+const SEATS_PER_TABLE = 10;
 
 export default function SeatingChart({ guests: initial }: { guests: SeatingGuest[] }) {
   const [guests, setGuests] = useState(initial);
