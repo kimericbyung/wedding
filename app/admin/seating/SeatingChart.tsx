@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { assignSeat, upsertTableConfig, deleteTableConfig } from "./actions";
-import type { SeatingGuest } from "./page";
+import { assignSeat, upsertTableConfig, deleteTableConfig, setTableName } from "./actions";
+import type { SeatingGuest, TableConfig } from "./page";
 
 const DEFAULT_SEAT_COUNT = 8;
 const MIN_SEAT_COUNT = 8;
@@ -25,10 +25,10 @@ export default function SeatingChart({
   tableConfigs: initialConfigs,
 }: {
   guests: SeatingGuest[];
-  tableConfigs: Record<number, number>;
+  tableConfigs: Record<number, TableConfig>;
 }) {
   const [guests, setGuests] = useState(initialGuests);
-  const [configs, setConfigs] = useState<Record<number, number>>(initialConfigs);
+  const [configs, setConfigs] = useState<Record<number, TableConfig>>(initialConfigs);
   const [selected, setSelected] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -44,7 +44,11 @@ export default function SeatingChart({
   const selectedGuest = guests.find((g) => g.id === selected) ?? null;
 
   function getSeatCount(t: number) {
-    return configs[t] ?? DEFAULT_SEAT_COUNT;
+    return configs[t]?.seatCount ?? DEFAULT_SEAT_COUNT;
+  }
+
+  function getTableName(t: number) {
+    return configs[t]?.name ?? null;
   }
 
   function getSeats(tableNumber: number): SeatSlot[] {
@@ -123,15 +127,22 @@ export default function SeatingChart({
       if (wouldLose) return;
     }
 
-    setConfigs((prev) => ({ ...prev, [tableNumber]: next }));
+    setConfigs((prev) => ({ ...prev, [tableNumber]: { ...prev[tableNumber], seatCount: next } }));
     startTransition(async () => {
       await upsertTableConfig(tableNumber, next);
     });
   }
 
+  function handleNameChange(tableNumber: number, name: string | null) {
+    setConfigs((prev) => ({ ...prev, [tableNumber]: { ...prev[tableNumber], name } }));
+    startTransition(async () => {
+      await setTableName(tableNumber, name);
+    });
+  }
+
   function handleAddTable() {
     const t = nextTable;
-    setConfigs((prev) => ({ ...prev, [t]: DEFAULT_SEAT_COUNT }));
+    setConfigs((prev) => ({ ...prev, [t]: { seatCount: DEFAULT_SEAT_COUNT, name: null } }));
     startTransition(async () => {
       await upsertTableConfig(t, DEFAULT_SEAT_COUNT);
     });
@@ -153,7 +164,7 @@ export default function SeatingChart({
     const t = nextTable;
     const guestId = selected;
 
-    setConfigs((prev) => ({ ...prev, [t]: DEFAULT_SEAT_COUNT }));
+    setConfigs((prev) => ({ ...prev, [t]: { seatCount: DEFAULT_SEAT_COUNT, name: null } }));
     setGuests((prev) =>
       prev.map((g) => (g.id === guestId ? { ...g, table_number: t, seat_number: 1 } : g))
     );
@@ -232,12 +243,14 @@ export default function SeatingChart({
             <TableCard
               key={t}
               tableNumber={t}
+              name={getTableName(t)}
               seatCount={getSeatCount(t)}
               seats={getSeats(t)}
               selectedGuestId={selected}
               onSeatClick={(seatNum, occupant) => handleSeatClick(t, seatNum, occupant)}
               onRemove={handleRemove}
               onSeatCountChange={(delta) => handleSeatCountChange(t, delta)}
+              onNameChange={(name) => handleNameChange(t, name)}
               onDeleteTable={() => handleDeleteTable(t)}
             />
           ))}
@@ -256,31 +269,105 @@ export default function SeatingChart({
 
 function TableCard({
   tableNumber,
+  name,
   seatCount,
   seats,
   selectedGuestId,
   onSeatClick,
   onRemove,
   onSeatCountChange,
+  onNameChange,
   onDeleteTable,
 }: {
   tableNumber: number;
+  name: string | null;
   seatCount: number;
   seats: SeatSlot[];
   selectedGuestId: string | null;
   onSeatClick: (seatNum: number, occupant: SeatingGuest | null) => void;
   onRemove: (guestId: string) => void;
   onSeatCountChange: (delta: number) => void;
+  onNameChange: (name: string | null) => void;
   onDeleteTable: () => void;
 }) {
+  const [editingName, setEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState(name ?? "");
+
   const occupied = seats.filter((s) => s.guest !== null).length;
   const isEmpty = occupied === 0;
+
+  function handleNameSave() {
+    setEditingName(false);
+    const trimmed = nameInput.trim();
+    onNameChange(trimmed || null);
+  }
+
+  // Build SVG label for the table surface
+  function TableLabel() {
+    if (name) {
+      const words = name.split(" ");
+      let line1 = name, line2: string | null = null;
+      if (name.length > 10 && words.length > 1) {
+        const mid = Math.ceil(words.length / 2);
+        line1 = words.slice(0, mid).join(" ");
+        line2 = words.slice(mid).join(" ");
+      }
+      return (
+        <>
+          <text x={CX} y={CY - (line2 ? 10 : 4)} textAnchor="middle" fontSize="9" fill="#7a6040">
+            {line1}
+          </text>
+          {line2 && (
+            <text x={CX} y={CY + 6} textAnchor="middle" fontSize="9" fill="#7a6040">
+              {line2}
+            </text>
+          )}
+          <text x={CX} y={CY + (line2 ? 22 : 14)} textAnchor="middle" fontSize="8" fill="#c0a880">
+            #{tableNumber}
+          </text>
+        </>
+      );
+    }
+    return (
+      <>
+        <text x={CX} y={CY - 10} textAnchor="middle" fontSize="8" fill="#a08060" letterSpacing="2">
+          TABLE
+        </text>
+        <text x={CX} y={CY + 16} textAnchor="middle" fontSize="26" fontWeight="300" fill="#7a6040">
+          {tableNumber}
+        </text>
+      </>
+    );
+  }
 
   return (
     <div className="border border-warm-border p-4">
       {/* Card header */}
-      <div className="flex items-center justify-between mb-2">
-        <p className="text-xs tracking-[0.2em] text-accent font-semibold">table {tableNumber}</p>
+      <div className="flex items-center justify-between mb-2 min-h-[24px]">
+        {/* Editable table name */}
+        {editingName ? (
+          <input
+            autoFocus
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            onBlur={handleNameSave}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleNameSave();
+              if (e.key === "Escape") setEditingName(false);
+            }}
+            placeholder={`table ${tableNumber}`}
+            className="text-xs tracking-[0.2em] text-accent font-semibold bg-transparent border-b border-accent outline-none w-36 placeholder:text-accent/40"
+          />
+        ) : (
+          <button
+            onClick={() => { setNameInput(name ?? ""); setEditingName(true); }}
+            className="text-xs tracking-[0.2em] text-accent font-semibold hover:opacity-60 transition-opacity text-left"
+            title="click to rename"
+          >
+            {name ?? `table ${tableNumber}`}
+          </button>
+        )}
+
         <div className="flex items-center gap-3">
           {/* Seat count control */}
           <div className="flex items-center gap-1.5 text-ink-light">
@@ -317,12 +404,7 @@ function TableCard({
       <svg viewBox="0 0 360 360" className="w-full select-none">
         {/* Table surface */}
         <circle cx={CX} cy={CY} r={TABLE_R} fill="#f5ede0" stroke="#d4c5a9" strokeWidth="1.5" />
-        <text x={CX} y={CY - 10} textAnchor="middle" fontSize="8" fill="#a08060" letterSpacing="2">
-          TABLE
-        </text>
-        <text x={CX} y={CY + 16} textAnchor="middle" fontSize="26" fontWeight="300" fill="#7a6040">
-          {tableNumber}
-        </text>
+        <TableLabel />
 
         {seats.map(({ seatNumber, guest }) => {
           const angle = ((seatNumber - 1) / seatCount) * 2 * Math.PI - Math.PI / 2;

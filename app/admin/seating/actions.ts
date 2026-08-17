@@ -30,3 +30,10 @@ export async function deleteTableConfig(tableNumber: number) {
   const supabase = createSupabaseAdminClient();
   await supabase.from("table_configs").delete().eq("table_number", tableNumber);
 }
+
+export async function setTableName(tableNumber: number, name: string | null) {
+  const supabase = createSupabaseAdminClient();
+  await supabase
+    .from("table_configs")
+    .upsert({ table_number: tableNumber, table_name: name }, { onConflict: "table_number" });
+}

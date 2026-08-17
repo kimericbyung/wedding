@@ -35,11 +35,17 @@ async function getAttendingGuests(): Promise<SeatingGuest[]> {
   });
 }
 
-async function getTableConfigs(): Promise<Record<number, number>> {
+export type TableConfig = { seatCount: number; name: string | null };
+
+async function getTableConfigs(): Promise<Record<number, TableConfig>> {
   const supabase = createSupabaseAdminClient();
-  const { data, error } = await supabase.from("table_configs").select("table_number, seat_count");
+  const { data, error } = await supabase
+    .from("table_configs")
+    .select("table_number, seat_count, table_name");
   if (error) return {};
-  return Object.fromEntries((data ?? []).map((r) => [r.table_number, r.seat_count]));
+  return Object.fromEntries(
+    (data ?? []).map((r) => [r.table_number, { seatCount: r.seat_count, name: r.table_name ?? null }])
+  );
 }
 
 export default async function SeatingPage() {
