@@ -57,9 +57,35 @@ export default function SeatingChart({
 
   function handleSeatClick(tableNumber: number, seatNumber: number, occupant: SeatingGuest | null) {
     if (occupant) {
-      setSelected((prev) => (prev === occupant.id ? null : occupant.id));
+      if (!selected || selected === occupant.id) {
+        setSelected((prev) => (prev === occupant.id ? null : occupant.id));
+        return;
+      }
+
+      // A different guest is selected → swap their seats
+      const guestId = selected;
+      const moving = guests.find((g) => g.id === guestId);
+      if (!moving) return;
+
+      const fromTable = moving.table_number;
+      const fromSeat = moving.seat_number;
+
+      setGuests((prev) =>
+        prev.map((g) => {
+          if (g.id === guestId) return { ...g, table_number: tableNumber, seat_number: seatNumber };
+          if (g.id === occupant.id) return { ...g, table_number: fromTable, seat_number: fromSeat };
+          return g;
+        })
+      );
+      setSelected(null);
+
+      startTransition(async () => {
+        await assignSeat(guestId, tableNumber, seatNumber);
+        await assignSeat(occupant.id, fromTable, fromSeat);
+      });
       return;
     }
+
     if (!selected) return;
 
     const guestId = selected;
