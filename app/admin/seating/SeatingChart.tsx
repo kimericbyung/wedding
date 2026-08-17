@@ -9,14 +9,15 @@ const MIN_SEAT_COUNT = 8;
 const MAX_SEAT_COUNT = 10;
 
 // SVG table geometry constants
-const CX = 150, CY = 150, TABLE_R = 52, SEAT_ORBIT_R = 100, SEAT_R = 20;
+const CX = 180, CY = 180, TABLE_R = 55, SEAT_ORBIT_R = 130, SEAT_R = 28;
 
 type SeatSlot = { seatNumber: number; guest: SeatingGuest | null };
 
-function initials(name: string) {
+function splitName(name: string): { first: string; last: string } {
   const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  const first = parts[0] ?? "";
+  const last = parts.slice(1).join(" ");
+  return { first, last };
 }
 
 export default function SeatingChart({
@@ -313,13 +314,13 @@ function TableCard({
       </div>
 
       {/* Circular diagram */}
-      <svg viewBox="0 0 300 300" className="w-full select-none">
+      <svg viewBox="0 0 360 360" className="w-full select-none">
         {/* Table surface */}
         <circle cx={CX} cy={CY} r={TABLE_R} fill="#f5ede0" stroke="#d4c5a9" strokeWidth="1.5" />
-        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="8" fill="#a08060" letterSpacing="2">
+        <text x={CX} y={CY - 10} textAnchor="middle" fontSize="8" fill="#a08060" letterSpacing="2">
           TABLE
         </text>
-        <text x={CX} y={CY + 14} textAnchor="middle" fontSize="22" fontWeight="300" fill="#7a6040">
+        <text x={CX} y={CY + 16} textAnchor="middle" fontSize="26" fontWeight="300" fill="#7a6040">
           {tableNumber}
         </text>
 
@@ -375,34 +376,51 @@ function TableCard({
                 strokeWidth="1.5"
                 strokeDasharray={strokeDash}
               />
-              {/* Seat number (small, above center) */}
+              {/* Seat number — small, near top of circle */}
               <text
                 x={sx}
-                y={sy - 6}
+                y={sy - 16}
                 textAnchor="middle"
-                fontSize="7"
-                fill={isSelected ? "rgba(255,255,255,0.75)" : "#b0987a"}
+                fontSize="6"
+                fill={isSelected ? "rgba(255,255,255,0.7)" : "#c0a880"}
               >
                 {seatNumber}
               </text>
-              {/* Guest initials or placeholder glyph */}
-              {isOccupied ? (
+              {/* Guest name (two lines) or placeholder */}
+              {isOccupied ? (() => {
+                const { first, last } = splitName(guest!.full_name);
+                const trim = (s: string) => s.length > 11 ? s.slice(0, 10) + "…" : s;
+                return (
+                  <>
+                    <text
+                      x={sx}
+                      y={sy + (last ? -3 : 3)}
+                      textAnchor="middle"
+                      fontSize="7"
+                      fontWeight="500"
+                      fill={isSelected ? "white" : "#5a4030"}
+                    >
+                      {trim(first)}
+                    </text>
+                    {last && (
+                      <text
+                        x={sx}
+                        y={sy + 8}
+                        textAnchor="middle"
+                        fontSize="7"
+                        fill={isSelected ? "rgba(255,255,255,0.85)" : "#7a6040"}
+                      >
+                        {trim(last)}
+                      </text>
+                    )}
+                  </>
+                );
+              })() : (
                 <text
                   x={sx}
-                  y={sy + 7}
+                  y={sy + 5}
                   textAnchor="middle"
-                  fontSize="9"
-                  fontWeight="500"
-                  fill={isSelected ? "white" : "#5a4030"}
-                >
-                  {initials(guest!.full_name)}
-                </text>
-              ) : (
-                <text
-                  x={sx}
-                  y={sy + 7}
-                  textAnchor="middle"
-                  fontSize="14"
+                  fontSize="16"
                   fill={canReceive ? "#c9a96e" : "#d4c5a9"}
                 >
                   {canReceive ? "+" : "·"}
