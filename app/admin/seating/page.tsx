@@ -7,6 +7,7 @@ export type SeatingGuest = {
   full_name: string;
   meal_choice: string | null;
   table_number: number | null;
+  seat_number: number | null;
 };
 
 async function getAttendingGuests(): Promise<SeatingGuest[]> {
@@ -14,7 +15,7 @@ async function getAttendingGuests(): Promise<SeatingGuest[]> {
 
   const { data: guests, error } = await supabase
     .from("guests")
-    .select("id, full_name, rsvps!inner(attending, meal_choice), seating(table_number)")
+    .select("id, full_name, rsvps!inner(attending, meal_choice), seating(table_number, seat_number)")
     .eq("invited", true)
     .eq("rsvps.attending", true)
     .order("full_name");
@@ -29,12 +30,23 @@ async function getAttendingGuests(): Promise<SeatingGuest[]> {
       full_name: g.full_name,
       meal_choice: (rsvp as { meal_choice: string | null })?.meal_choice ?? null,
       table_number: (seat as { table_number: number | null } | null)?.table_number ?? null,
+      seat_number: (seat as { seat_number: number | null } | null)?.seat_number ?? null,
     };
   });
 }
 
+async function getTableConfigs(): Promise<Record<number, number>> {
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase.from("table_configs").select("table_number, seat_count");
+  if (error) return {};
+  return Object.fromEntries((data ?? []).map((r) => [r.table_number, r.seat_count]));
+}
+
 export default async function SeatingPage() {
-  const guests = await getAttendingGuests();
+  const [guests, tableConfigs] = await Promise.all([
+    getAttendingGuests(),
+    getTableConfigs(),
+  ]);
 
   return (
     <div className="py-20 px-6">
@@ -48,7 +60,7 @@ export default async function SeatingPage() {
 
         <AdminNav />
 
-        <SeatingChart guests={guests} />
+        <SeatingChart guests={guests} tableConfigs={tableConfigs} />
       </div>
     </div>
   );
