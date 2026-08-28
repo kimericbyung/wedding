@@ -55,6 +55,28 @@ export default function PhotoboothClient() {
     throw new Error("Camera timed out. Please try again.");
   }
 
+  async function savePhoto() {
+    if (!photoUrl) return;
+    try {
+      const blob = await fetch(photoUrl).then((r) => r.blob());
+      const file = new File([blob], "photobooth.jpg", { type: "image/jpeg" });
+
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], title: "Brittaney & Eric Photobooth" });
+      } else {
+        // Fallback: regular download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "photobooth.jpg";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch {
+      // User cancelled the share sheet — no action needed
+    }
+  }
+
   if (phase === "done" && photoUrl) {
     return (
       <div className="w-full">
@@ -64,13 +86,12 @@ export default function PhotoboothClient() {
           className="w-full border border-warm-border mb-8"
         />
         <div className="flex gap-3 justify-center flex-wrap">
-          <a
-            href={photoUrl}
-            download="photobooth.jpg"
+          <button
+            onClick={savePhoto}
             className="text-xs tracking-[0.2em] text-accent font-semibold border border-accent px-8 py-4 hover:bg-accent/5 transition-colors"
           >
             save photo
-          </a>
+          </button>
           <button
             onClick={startCountdown}
             className="text-xs tracking-[0.2em] text-ink-light border border-warm-border px-8 py-4 hover:border-ink hover:text-ink transition-colors"
